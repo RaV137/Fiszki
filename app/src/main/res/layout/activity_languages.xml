@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/player_list_layout"
-    tools:context=".flashcards.FlashcardsActivity"
+    android:id="@+id/languages_list_layout"
+    tools:context=".languages.LanguagesActivity"
     android:background="@color/colorPrimaryLight" >
 
     <ListView
-        android:id="@+id/playersList"
+        android:id="@+id/languagesList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </ListView>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/addPlayer"
+        android:id="@+id/addLanguage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right|bottom"
@@ -24,6 +24,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:src="@drawable/ic_add_white_24dp"
-        android:layout_margin="16dp"/>
+        android:layout_margin="16dp"
+        tools:ignore="RtlHardcoded" />
 
 </RelativeLayout>

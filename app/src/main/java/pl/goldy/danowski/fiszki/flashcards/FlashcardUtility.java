@@ -1,25 +1,96 @@
 package pl.goldy.danowski.fiszki.flashcards;
 
-import java.util.ArrayList;
+import android.content.Context;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class FlashcardUtility {
+import java.util.ArrayList;
+import java.util.Collections;
+
+import pl.goldy.danowski.fiszki.R;
+
+class FlashcardUtility {
 
     private static ArrayList<Flashcard> cards;
-
     private static boolean initialized = false;
 
-    public static void initialize() {
+    private static boolean foreignWords = false;
+
+    static void initialize() {
         if(initialized)
             return;
 
-        cards = new ArrayList<>();
         initialized = true;
+        cards = new ArrayList<>();
+        fillList();
     }
 
-    private static void print() {
-        // TODO
+    static void printCards(final View view) {
+        if (!initialized) throw new AssertionError("Class not initialized!");
 
-
+        GridView gridView = view.findViewById(R.id.flashcardsGrid);
+        ArrayAdapter<Flashcard> adapter;
+        if(foreignWords) {
+            adapter = new ForeignWordFlashcardAdapter(view.getContext(), cards);
+        } else {
+            adapter = new PolishWordFlashcardAdapter(view.getContext(), cards);
+        }
+        gridView.setAdapter(adapter);
     }
 
+    private static void fillList() {
+        if (!initialized) throw new AssertionError("Class not initialized!");
+
+        for(int i = 1; i < 21; ++i) {
+            cards.add(new Flashcard("Słówko " + i,"Word " + i, "Przykład użycia nr " + i, "Use case no " + i));
+        }
+    }
+
+    static void addNewFlashCard(String foreignWord, String foreignUseCase, String polishWord, String polishUseCase) {
+        cards.add(new Flashcard(polishWord, foreignWord, polishUseCase, foreignUseCase));
+    }
+
+    static void shuffleCards(View view) {
+        Collections.shuffle(cards);
+        printCards(view);
+    }
+
+    static void changeLanguage(View headView) {
+        foreignWords = !foreignWords;
+        printCards(headView);
+    }
+
+    /**
+     *
+     * @param position Position of card in an array.
+     * @param view View with word from selected card,
+     * @return True = show details, false = do nothing.
+     */
+    static boolean flashcardClicked(int position, View view) {
+        TextView textView = (TextView) view;
+        Flashcard card = cards.get(position);
+        int taps = card.getTaps();
+        if(taps == 0) {
+            if(foreignWords) {
+                textView.setText(card.getPolish());
+            } else {
+                textView.setText(card.getForeign());
+            }
+            card.incrementTaps();
+            return false;
+        } else {
+            if(!foreignWords) {
+                textView.setText(card.getPolish());
+            } else {
+                textView.setText(card.getForeign());
+            }
+            card.resetTaps();
+            return true;
+        }
+    }
 }

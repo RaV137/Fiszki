@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <EditText
+        android:id="@+id/foreignWord"
+        android:inputType="textNoSuggestions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif"
+        android:hint="@string/foreign_word" />
+    <EditText
+        android:id="@+id/foreignUseCase"
+        android:inputType="textNoSuggestions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif"
+        android:hint="@string/foreign_use_case"/>
+    <EditText
+        android:id="@+id/polishWord"
+        android:inputType="textNoSuggestions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif"
+        android:hint="@string/polish_word" />
+    <EditText
+        android:id="@+id/polishUseCase"
+        android:inputType="textNoSuggestions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:fontFamily="sans-serif"
+        android:hint="@string/polish_use_case"/>
+</LinearLayout>

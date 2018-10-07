@@ -1,36 +1,51 @@
 package pl.goldy.danowski.fiszki.flashcards;
 
-public class Flashcard {
+class Flashcard {
 
     private String polish, foreign, polishUseCase, foreignUseCase;
+    private int taps;
 
-    public Flashcard(String polish, String foreign) {
+    Flashcard(String polish, String foreign) {
         this.polish = polish;
         this.foreign = foreign;
         this.polishUseCase = "";
         this.foreignUseCase = "";
+        resetTaps();
     }
 
-    public Flashcard(String polish, String foreign, String polishUseCase, String foreignUseCase) {
+    Flashcard(String polish, String foreign, String polishUseCase, String foreignUseCase) {
         this.polish = polish;
         this.foreign = foreign;
         this.polishUseCase = polishUseCase;
         this.foreignUseCase = foreignUseCase;
+        resetTaps();
     }
 
-    public String getPolish() {
+    int getTaps() {
+        return taps;
+    }
+
+    void resetTaps() {
+        this.taps = 0;
+    }
+
+    void incrementTaps() {
+        this.taps++;
+    }
+
+    String getPolish() {
         return polish;
     }
 
-    public String getForeign() {
+    String getForeign() {
         return foreign;
     }
 
-    public String getPolishUseCase() {
+    String getPolishUseCase() {
         return polishUseCase;
     }
 
-    public String getForeignUseCase() {
+    String getForeignUseCase() {
         return foreignUseCase;
     }
 }
