@@ -10,4 +10,6 @@
     <string name="addFlashcardCancel">Anuluj</string>
     <string name="shuffle">Wymieszaj</string>
     <string name="changeLanguage">Zamień język</string>
+
+    <string name="ok">OK</string>
 </resources>

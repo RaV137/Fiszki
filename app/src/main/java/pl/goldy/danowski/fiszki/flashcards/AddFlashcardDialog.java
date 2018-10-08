@@ -25,28 +25,19 @@ public class AddFlashcardDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
 
                     }
-                })
-                .setNegativeButton(R.string.addFlashcardCancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        AddFlashcardDialog.this.getDialog().cancel();
-                    }
                 });
         return builder.create();
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         final AlertDialog d = (AlertDialog)getDialog();
-        if(d != null)
-        {
+        if(d != null) {
             Button positiveButton = d.getButton(Dialog.BUTTON_POSITIVE);
-            positiveButton.setOnClickListener(new View.OnClickListener()
-            {
+            positiveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
+                public void onClick(View v) {
                     TextView tvForeignWord = getDialog().findViewById(R.id.foreignWord);
                     TextView tvForeignUseCase = getDialog().findViewById(R.id.foreignUseCase);
                     TextView tvPolishWord = getDialog().findViewById(R.id.polishWord);

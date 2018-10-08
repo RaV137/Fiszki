@@ -1,13 +1,9 @@
 package pl.goldy.danowski.fiszki.flashcards;
 
-import android.content.Context;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -62,6 +58,9 @@ class FlashcardUtility {
 
     static void changeLanguage(View headView) {
         foreignWords = !foreignWords;
+        for(Flashcard card : cards){
+            card.resetTaps();
+        }
         printCards(headView);
     }
 
@@ -92,5 +91,17 @@ class FlashcardUtility {
             card.resetTaps();
             return true;
         }
+    }
+
+    static Flashcard getCardFromArray(int position) {
+        return cards.get(position);
+    }
+
+    static void changeLanguageDialog() {
+        // TODO
+    }
+
+    public static boolean getForeign() {
+        return foreignWords;
     }
 }

@@ -1,23 +1,20 @@
 package pl.goldy.danowski.fiszki.flashcards;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import pl.goldy.danowski.fiszki.R;
 
@@ -55,7 +52,10 @@ public class FlashcardsActivity extends AppCompatActivity {
     private void flashcardClicked(int position, View view) {
         if(FlashcardUtility.flashcardClicked(position, view)) {
             Toast.makeText(this, "Show details about: " + position, Toast.LENGTH_SHORT).show();
-            // TODO
+
+            ShowCardDialog dialog = new ShowCardDialog();
+            dialog.setPosition(position);
+            dialog.show(getFragmentManager(), "ShowCardDialog");
         }
     }
 
