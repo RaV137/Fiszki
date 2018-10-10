@@ -13,7 +13,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif"
-        android:id="@+id/word"
+        android:id="@+id/text"
         android:gravity="center"/>
 
     <TextView

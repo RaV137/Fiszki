@@ -10,19 +10,43 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import pl.goldy.danowski.fiszki.R;
+import pl.goldy.danowski.fiszki.db.entity.FlashcardEntity;
 
-public class AddFlashcardDialog extends DialogFragment {
+public class EditFlashcardDialog extends DialogFragment {
+
+    private int position;
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.add_flashcard_dialog, null))
-                .setPositiveButton(R.string.add_button, new DialogInterface.OnClickListener() {
+
+        View mainView = inflater.inflate(R.layout.add_flashcard_dialog, null);
+        builder.setView(mainView);
+        FlashcardEntity card = FlashcardUtility.getCardFromArray(position);
+
+        EditText tvForeignWord = mainView.findViewById(R.id.foreignWord);
+        EditText tvForeignUseCase = mainView.findViewById(R.id.foreignUseCase);
+        EditText tvPolishWord = mainView.findViewById(R.id.polishWord);
+        EditText tvPolishUseCase = mainView.findViewById(R.id.polishUseCase);
+
+        tvForeignWord.setText(card.getForeignWord());
+        tvForeignUseCase.setText(card.getForeignUseCase());
+        tvPolishWord.setText(card.getPolishWord());
+        tvPolishUseCase.setText(card.getPolishUseCase());
+
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int id) { }
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
                 });
         return builder.create();
     }
@@ -65,7 +89,7 @@ public class AddFlashcardDialog extends DialogFragment {
                         foreignUseCase = tvForeignUseCase.getText().toString();
                         polishWord = tvPolishWord.getText().toString();
                         polishUseCase = tvPolishUseCase.getText().toString();
-                        FlashcardUtility.addNewFlashCard(foreignWord, foreignUseCase, polishWord, polishUseCase);
+                        FlashcardUtility.editFlashcard(foreignWord, foreignUseCase, polishWord, polishUseCase, position);
                         d.dismiss();
                     }
                 }

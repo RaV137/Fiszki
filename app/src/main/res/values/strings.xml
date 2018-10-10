@@ -6,10 +6,15 @@
     <string name="polish_word">Polskie słówko</string>
     <string name="polish_use_case">Polski przykład</string>
 
-    <string name="addFlashcardOK">Dodaj</string>
-    <string name="addFlashcardCancel">Anuluj</string>
+    <string name="add_button">Dodaj</string>
+    <string name="cancel_button">Anuluj</string>
     <string name="shuffle">Wymieszaj</string>
-    <string name="changeLanguage">Zamień język</string>
+    <string name="change_language">Zamień język</string>
 
     <string name="ok">OK</string>
+    <string name="edit">Edytuj</string>
+    <string name="delete">Usuń</string>
+    <string name="show_info">Pokaż szczegóły</string>
+    <string name="lang_name">Nazwa języka</string>
+    <string name="cat_name">Nazwa kategorii</string>
 </resources>

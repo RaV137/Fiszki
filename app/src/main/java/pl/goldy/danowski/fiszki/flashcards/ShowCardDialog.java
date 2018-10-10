@@ -3,7 +3,6 @@ package pl.goldy.danowski.fiszki.flashcards;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,12 +11,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import pl.goldy.danowski.fiszki.R;
+import pl.goldy.danowski.fiszki.db.entity.FlashcardEntity;
 
 public class ShowCardDialog extends DialogFragment {
 
     private int position;
     private boolean foreign;
-    private Flashcard card;
+    private FlashcardEntity card;
     private View mainView;
 
     public void setPosition(int position) {
@@ -40,7 +40,7 @@ public class ShowCardDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) { }
                 })
-                .setNeutralButton(R.string.changeLanguage, new DialogInterface.OnClickListener() {
+                .setNeutralButton(R.string.change_language, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) { }
                 });
@@ -48,22 +48,17 @@ public class ShowCardDialog extends DialogFragment {
     }
 
    private void printData() {
-       TextView tvWord = mainView.findViewById(R.id.word);
+       TextView tvWord = mainView.findViewById(R.id.text);
        TextView tvUseCase = mainView.findViewById(R.id.useCase);
 
        if(foreign) {
-           tvWord.setText(card.getForeign());
+           tvWord.setText(card.getForeignWord());
            tvUseCase.setText(card.getForeignUseCase());
        } else {
-           tvWord.setText(card.getPolish());
+           tvWord.setText(card.getPolishWord());
            tvUseCase.setText(card.getPolishUseCase());
        }
    }
-
-    @Override
-    public void show(FragmentManager manager, String tag) {
-        super.show(manager, tag);
-    }
 
     @Override
     public void onResume() {

@@ -7,15 +7,21 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
+;
+import lombok.Getter;
+import lombok.Setter;
 import pl.goldy.danowski.fiszki.R;
+import pl.goldy.danowski.fiszki.db.entity.FlashcardEntity;
 
 class FlashcardUtility {
 
-    private static ArrayList<Flashcard> cards;
+    private static ArrayList<FlashcardEntity> cards;
     private static boolean initialized = false;
-
     private static boolean foreignWords = false;
+
+    @Getter
+    @Setter
+    private static String currentTitle;
 
     static void initialize() {
         if(initialized)
@@ -30,12 +36,8 @@ class FlashcardUtility {
         if (!initialized) throw new AssertionError("Class not initialized!");
 
         GridView gridView = view.findViewById(R.id.flashcardsGrid);
-        ArrayAdapter<Flashcard> adapter;
-        if(foreignWords) {
-            adapter = new ForeignWordFlashcardAdapter(view.getContext(), cards);
-        } else {
-            adapter = new PolishWordFlashcardAdapter(view.getContext(), cards);
-        }
+        ArrayAdapter<FlashcardEntity> adapter;
+        adapter = new FlashcardAdapter(view.getContext(), cards);
         gridView.setAdapter(adapter);
     }
 
@@ -43,12 +45,12 @@ class FlashcardUtility {
         if (!initialized) throw new AssertionError("Class not initialized!");
 
         for(int i = 1; i < 21; ++i) {
-            cards.add(new Flashcard("Słówko " + i,"Word " + i, "Przykład użycia nr " + i, "Use case no " + i));
+            cards.add(new FlashcardEntity("Słówko " + i,"Word " + i, "Przykład użycia nr " + i, "Use case no " + i));
         }
     }
 
     static void addNewFlashCard(String foreignWord, String foreignUseCase, String polishWord, String polishUseCase) {
-        cards.add(new Flashcard(polishWord, foreignWord, polishUseCase, foreignUseCase));
+        cards.add(new FlashcardEntity(polishWord, foreignWord, polishUseCase, foreignUseCase));
     }
 
     static void shuffleCards(View view) {
@@ -58,7 +60,7 @@ class FlashcardUtility {
 
     static void changeLanguage(View headView) {
         foreignWords = !foreignWords;
-        for(Flashcard card : cards){
+        for(FlashcardEntity card : cards){
             card.resetTaps();
         }
         printCards(headView);
@@ -72,36 +74,45 @@ class FlashcardUtility {
      */
     static boolean flashcardClicked(int position, View view) {
         TextView textView = (TextView) view;
-        Flashcard card = cards.get(position);
+        FlashcardEntity card = cards.get(position);
         int taps = card.getTaps();
         if(taps == 0) {
             if(foreignWords) {
-                textView.setText(card.getPolish());
+                textView.setText(card.getPolishWord());
             } else {
-                textView.setText(card.getForeign());
+                textView.setText(card.getForeignWord());
             }
             card.incrementTaps();
             return false;
         } else {
             if(!foreignWords) {
-                textView.setText(card.getPolish());
+                textView.setText(card.getPolishWord());
             } else {
-                textView.setText(card.getForeign());
+                textView.setText(card.getForeignWord());
             }
             card.resetTaps();
             return true;
         }
     }
 
-    static Flashcard getCardFromArray(int position) {
+    static FlashcardEntity getCardFromArray(int position) {
         return cards.get(position);
     }
 
-    static void changeLanguageDialog() {
-        // TODO
+    static void deleteCard(int id, View headView) {
+        cards.remove(id);
+        printCards(headView);
     }
 
-    public static boolean getForeign() {
+    static void editFlashcard(String foreignWord, String foreignUseCase, String polishWord, String polishUseCase, int position) {
+        FlashcardEntity card = cards.get(position);
+        card.setForeignWord(foreignWord);
+        card.setForeignUseCase(foreignUseCase);
+        card.setPolishWord(polishWord);
+        card.setPolishUseCase(polishUseCase);
+    }
+
+    static boolean getForeign() {
         return foreignWords;
     }
 }

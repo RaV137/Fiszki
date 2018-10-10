@@ -19,21 +19,26 @@
         <activity
             android:name=".flashcards.FlashcardsActivity"
             android:configChanges="orientation"
-            android:theme="@style/AppTheme">
+            android:parentActivityName=".categories.CategoriesActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity
+            android:name=".categories.CategoriesActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".languages.LanguagesActivity"/>
+        <activity
+            android:name=".languages.LanguagesActivity"
+            android:configChanges="orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".categories.CategoriesActivity"
-            android:configChanges="orientation"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".languages.LanguagesActivity"
-            android:configChanges="orientation"
-            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

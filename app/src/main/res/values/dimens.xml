@@ -4,5 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="textSize">22sp</dimen>
-    <dimen name="flashcardSize">150dp</dimen>
+    <dimen name="item_size">150dp</dimen>
 </resources>

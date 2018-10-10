@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:gravity="center"
-        android:columnWidth="@dimen/flashcardSize"
+        android:columnWidth="@dimen/item_size"
         android:layout_margin="20dp"
         android:numColumns="auto_fit"
         android:verticalSpacing="10dp"

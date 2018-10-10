@@ -3,5 +3,5 @@
     <item android:id="@+id/shuffle"
         android:title="@string/shuffle"/>
     <item android:id="@+id/changeLanguage"
-        android:title="@string/changeLanguage"/>
+        android:title="@string/change_language"/>
 </menu>
