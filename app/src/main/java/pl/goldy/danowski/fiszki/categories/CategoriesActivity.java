@@ -28,18 +28,15 @@ public class CategoriesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_categories);
 
         Intent intent = getIntent();
-        String title = intent.getStringExtra("langName");
-        if(title != null && !title.equals("")) {
-            CategoriesUtility.setCurrentTitle(title);
-        }
+        int langId = intent.getIntExtra("langId", -1);
+        CategoriesUtility.initialize(getApplication(), langId);
+
+//        Toast.makeText(this, "Id wybranego języka: " + CategoriesUtility.getCurrentLanguageId(), Toast.LENGTH_SHORT).show();
         setTitle(CategoriesUtility.getCurrentTitle());
-        Toast.makeText(this, intent.getStringExtra("langId"), Toast.LENGTH_SHORT).show();
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         assert actionBar != null : "ActionBar is null!";
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-        CategoriesUtility.initialize();
 
         FloatingActionButton fab = findViewById(R.id.addCategory);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +63,6 @@ public class CategoriesActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FlashcardsActivity.class);
         CategoryEntity cat = CategoriesUtility.getCategory(position);
         assert cat != null : "Category is null!";
-        intent.putExtra("catName", cat.getName());
         intent.putExtra("catId", cat.getId());
         startActivity(intent);
     }
@@ -110,6 +106,23 @@ public class CategoriesActivity extends AppCompatActivity {
         dialog.show(getFragmentManager(), "EditCategoryDialog");
 
         CategoriesUtility.printCategories(headView);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        CategoriesUtility.destroy();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

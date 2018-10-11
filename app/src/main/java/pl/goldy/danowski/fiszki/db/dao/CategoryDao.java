@@ -16,6 +16,12 @@ public interface CategoryDao {
     @Query("SELECT * FROM categories")
     List<CategoryEntity> getAll();
 
+    @Query("SELECT * FROM categories WHERE language_id = :languageId")
+    List<CategoryEntity> getFromLanguage(int languageId);
+
+    @Query("SELECT * FROM categories WHERE id = :id")
+    CategoryEntity getById(int id);
+
     @Insert
     void insert(CategoryEntity cat);
 

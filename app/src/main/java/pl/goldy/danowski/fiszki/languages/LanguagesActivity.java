@@ -26,7 +26,7 @@ public class LanguagesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_languages);
 
-        LanguageUtility.initialize();
+        LanguageUtility.initialize(getApplication());
 
         FloatingActionButton fab = findViewById(R.id.addLanguage);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +52,6 @@ public class LanguagesActivity extends AppCompatActivity {
     private void langClicked(int position) {
         Intent intent = new Intent(this, CategoriesActivity.class);
         LanguageEntity lang = LanguageUtility.getLang(position);
-        intent.putExtra("langName", lang.getName());
         intent.putExtra("langId", lang.getId());
         startActivity(intent);
     }

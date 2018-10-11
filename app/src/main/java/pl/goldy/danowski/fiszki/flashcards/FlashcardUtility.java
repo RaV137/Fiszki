@@ -1,5 +1,6 @@
 package pl.goldy.danowski.fiszki.flashcards;
 
+import android.app.Application;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
@@ -7,10 +8,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
-;
-import lombok.Getter;
-import lombok.Setter;
+
 import pl.goldy.danowski.fiszki.R;
+import pl.goldy.danowski.fiszki.db.database.DatabaseRepository;
+import pl.goldy.danowski.fiszki.db.entity.CategoryEntity;
 import pl.goldy.danowski.fiszki.db.entity.FlashcardEntity;
 
 class FlashcardUtility {
@@ -18,17 +19,25 @@ class FlashcardUtility {
     private static ArrayList<FlashcardEntity> cards;
     private static boolean initialized = false;
     private static boolean foreignWords = false;
+    private static DatabaseRepository repo;
+    private static CategoryEntity currentCategory;
 
-    @Getter
-    @Setter
-    private static String currentTitle;
+    static String getCurrentTitle() {
+        return currentCategory.getName();
+    }
 
-    static void initialize() {
+    static Integer getCurrentCategoryId() {
+        return currentCategory.getId();
+    }
+
+    static void initialize(Application application, int catId) {
         if(initialized)
             return;
 
         initialized = true;
         cards = new ArrayList<>();
+        repo = new DatabaseRepository(application);
+        currentCategory = repo.getCategoryById(catId) ;
         fillList();
     }
 
@@ -44,13 +53,17 @@ class FlashcardUtility {
     private static void fillList() {
         if (!initialized) throw new AssertionError("Class not initialized!");
 
-        for(int i = 1; i < 21; ++i) {
-            cards.add(new FlashcardEntity("Słówko " + i,"Word " + i, "Przykład użycia nr " + i, "Use case no " + i));
-        }
+        cards = (ArrayList<FlashcardEntity>) repo.getFlashcardsByCategoryId(getCurrentCategoryId());
+//        for(int i = 1; i < 21; ++i) {
+//            cards.add(new FlashcardEntity("Słówko " + i,"Word " + i, "Przykład użycia nr " + i, "Use case no " + i));
+//        }
     }
 
     static void addNewFlashCard(String foreignWord, String foreignUseCase, String polishWord, String polishUseCase) {
-        cards.add(new FlashcardEntity(polishWord, foreignWord, polishUseCase, foreignUseCase));
+        FlashcardEntity card = new FlashcardEntity(foreignWord, foreignUseCase, polishWord, polishUseCase, getCurrentCategoryId());
+        cards.add(card);
+        repo.insertFlashcard(card);
+        fillList();
     }
 
     static void shuffleCards(View view) {
@@ -100,7 +113,9 @@ class FlashcardUtility {
     }
 
     static void deleteCard(int id, View headView) {
+        repo.deleteFlashcard(getCardFromArray(id));
         cards.remove(id);
+        fillList();
         printCards(headView);
     }
 
@@ -110,9 +125,18 @@ class FlashcardUtility {
         card.setForeignUseCase(foreignUseCase);
         card.setPolishWord(polishWord);
         card.setPolishUseCase(polishUseCase);
+        repo.updateFlashcard(card);
+        fillList();
     }
 
     static boolean getForeign() {
         return foreignWords;
+    }
+
+    static void destroy() {
+        initialized = false;
+        cards = null;
+        repo = null;
+        currentCategory = null;
     }
 }

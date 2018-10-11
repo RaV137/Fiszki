@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import pl.goldy.danowski.fiszki.R;
 
@@ -27,18 +26,15 @@ public class FlashcardsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_flashcards);
 
         Intent intent = getIntent();
-        String title = intent.getStringExtra("catName");
-        if(title != null && !title.equals("")) {
-            FlashcardUtility.setCurrentTitle(title);
-        }
+        int catId = intent.getIntExtra("catId", -1);
+        FlashcardUtility.initialize(getApplication(), catId);
+
+//        Toast.makeText(this, "Id wybranego języka: " + FlashcardUtility.getCurrentCategoryId(), Toast.LENGTH_SHORT).show();
         setTitle(FlashcardUtility.getCurrentTitle());
-        Toast.makeText(this, intent.getStringExtra("catId"), Toast.LENGTH_SHORT).show();
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         assert actionBar != null : "ActionBar is null!";
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-        FlashcardUtility.initialize();
 
         FloatingActionButton fab = findViewById(R.id.addFlashcard);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -126,13 +122,23 @@ public class FlashcardsActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        FlashcardUtility.destroy();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        int itemId = item.getItemId();
+        switch (itemId) {
             case R.id.shuffle:
                 shuffleCards();
                 return true;
             case R.id.changeLanguage:
                 changeLanguage();
+                return true;
+            case 16908332: // naciśnięto strzałkę powrotu do poprzedniej aktywności
+                onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

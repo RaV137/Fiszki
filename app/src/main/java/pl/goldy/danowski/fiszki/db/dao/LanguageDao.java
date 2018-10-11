@@ -16,6 +16,9 @@ public interface LanguageDao {
     @Query("SELECT * FROM languages")
     List<LanguageEntity> getAll();
 
+    @Query("SELECT * FROM languages WHERE id = :id")
+    LanguageEntity getById(int id);
+
     @Insert
     void insert(LanguageEntity lang);
 

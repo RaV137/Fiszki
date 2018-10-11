@@ -20,8 +20,8 @@ public interface FlashcardDao {
     @Query("SELECT * FROM flashcards WHERE category_id = :categoryId")
     List<FlashcardEntity> getFromCategory(int categoryId);
 
-    @Query("SELECT * FROM flashcards WHERE id = :id")
-    FlashcardEntity getById(int id);
+//    @Query("SELECT * FROM flashcards WHERE id = :id")
+//    FlashcardEntity getById(int id);
 
     @Insert
     void insert(FlashcardEntity card);
